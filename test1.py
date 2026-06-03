@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from ultralytics import YOLO
 import cv2
 
@@ -16,3 +17,6 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+=======
+print("Python+Git环境搭建完毕！")
+>>>>>>> d479a7281f810c94a25d2fcca310121b0434deae
