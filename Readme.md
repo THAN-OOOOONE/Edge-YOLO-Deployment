@@ -1,47 +1,26 @@
-# YOLOv5实时目标检测
+# Edge-YOLO-Deployment
 
-## 项目简介
-在Windows上部署YOLOv5模型，利用手机摄像头实现实时目标检测。
-本项目是我“边缘AI部署”学习路线的第一个里程碑。
+本项目记录了我从零基础自学边缘 AI 部署的实战过程，目前已跑通在香橙派/PC端的实时目标检测闭环。
 
-## 技术栈
-- Python 3.10
-- OpenCV (计算机视觉库)
-- Ultralytics YOLOv5 (目标检测模型)
-- PyTorch (深度学习框架)
+## 项目做的是什么
+一个在嵌入式设备上运行的实时检测程序。它能通过摄像头实时捕捉画面，把人、书本等物体框出来，并实时显示处理帧率（FPS）。
+- **核心逻辑**：YOLO模型负责识别，OpenCV 负责图像处理。
+- **运行环境**：香橙派 (Orange Pi) / Windows PC。
 
-## 运行环境
-- Windows 10/11
-- Python 3.10
-- 所需库："opencv-python", "ultralytics", "torch"
-- 可选：Android/iOS手机 + DroidCam/EpocCam App
+## 为什么要做这个项目
+为了解决边缘侧 AI 模型运行慢、设备兼容性差的问题。我通过不断优化模型和调整代码，从最初的 12 FPS 提升到了 20 FPS，并摸清了在嵌入式设备上部署的基本坑点。
 
-## 如何使用
-1.  克隆本仓库到本地
-2.  安装依赖："pip install opencv-python ultralytics torch torchvision"
-3.  准备摄像头：
-    -   使用电脑自带摄像头：代码中"cv2.VideoCapture(0)"
-    -   使用手机摄像头：下载DroidCam，记录App显示的IP地址，修改代码
-4.  运行：`python test1.py`
-5.  按 `q` 键退出程序
+## 实测优化记录 (我踩过的坑)
+| 优化手段 | FPS 变化 | 结论 |
+| :--- | :--- | :--- |
+| **更换轻量模型 (v5s -> v5n)** | 12 FPS -> 20 FPS | 效果最明显，算力受限时必须优先考虑模型轻量化 |
+| **降低分辨率** | 12 FPS -> 9 FPS | **反向优化**：Resize 开销远大于计算收益，不要盲目降分辨率 |
 
-## 效果演示
-[点击查看演示视频]（https://www.bilibili.com/video/BV1PFEP6vEx1/?vd_source=78ae6d79cdbfd741a8001641afdd6589）
+## 我解决过的问题 (Troubleshooting)
+- **环境依赖**：解决模型下载损坏、依赖库冲突等问题。
+- **性能瓶颈**：通过分析发现 CPU Resize 是性能杀手，通过更换轻量化模型绕过该限制。
+- **硬件适配**：成功在 Windows 与 Linux 环境下适配不同的摄像头接口。
 
-- 实时检测画面中的物体（人、书本、杯子等）
-- YOLOv5s模型，在CPU上运行
-
-## 踩坑记录
-- **TabError**: 复制代码导致缩进混乱，需统一使用空格或Tab键
-- **摄像头打不开**: Windows隐私权限设置，或使用手机替代方案
-- **Git推送冲突**: 本地和远程文件重名，使用"git pull"解决
-- **TabError**: 复制代码导致缩进混乱，需统一使用空格或Tab
-- **摄像头打不开**: Windows隐私权限，或改用手机DroidCam替代
-- **WiFi传输瓶颈**: 优化分辨率后FPS反降，定位原因为WiFi传输成为瓶颈，非本地算力问题
-- **模型选型**: yolov5s(12帧) → yolov5n(20帧)，轻量模型显著提升端侧性能
-
-## 作者
-- 民办二本，Gap期自学边缘AI部署
-- 目标岗位：边缘AI应用开发 / AI模型部署工程师
-- 学习记录：持续更新中...
-
+## 演示与文档
+- **演示视频**：[点击查看 Bilibili 演示](https://www.bilibili.com/video/BV1PFEP6vEx1/)
+- **完整开发日志**：[docs/LOG.md](docs/LOG.md) (记录了从环境配置到硬件适配的所有实战细节)

@@ -1,0 +1,33 @@
+# 忽略模型文件
+*.pt
+
+# 忽略 Python 缓存和临时文件
+__pycache__/
+*.pyc
+
+# 忽略 VS Code 的环境配置（防止把你的插件配置传上去）
+.vscode/
+
+# 忽略系统自动生成的文件
+.DS_Store
+
+# 个人敏感笔记（必须加入！）
+LOG.md
+GLOSSARY.md
+PRIVATE/    
+
+# 项目文档里可能的私密草稿
+docs/LOG.md
+docs/private/
+
+# 虚拟环境（如果以后创建的话）
+venv/
+env/
+.venv/
+
+# Jupyter Notebook 检查点（如果以后用的话）
+.ipynb_checkpoints/
+
+# 环境配置文件（可能包含本地路径等敏感信息）
+*.env
+.env.*
